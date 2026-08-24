@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aura Dental
 
-## Getting Started
+A full-stack dental clinic web platform built to handle patient discovery, treatment estimation, consultation booking, payments, and internal booking management.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Aura Dental is a production-style dental clinic platform focused on making the patient journey simple while giving the clinic an internal system to manage bookings and leads.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The project includes both a public-facing patient experience and a protected admin workflow.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## What I Built
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Patient Experience
 
-## Learn More
+- Premium responsive dental clinic website
+- Treatment discovery and service browsing
+- Treatment price estimator
+- Lead capture through the treatment estimator
+- Multi-step consultation booking flow
+- Treatment selection and preferred consultation time
+- Patient details collection
+- Online deposit/payment flow
+- Booking confirmation flow
+- WhatsApp contact integration
+- Mobile-friendly navigation and CTAs
+- Testimonials, reviews, FAQs and treatment information
 
-To learn more about Next.js, take a look at the following resources:
+### Booking & Payments
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Multi-step booking wizard
+- Stripe PaymentIntent integration
+- Payment webhook processing
+- Booking creation after successful payment authorization
+- Unique booking references
+- Booking lifecycle/status management
+- Duplicate payment protection through unique payment intent IDs
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Internal Admin System
 
-## Deploy on Vercel
+- Protected staff/admin login
+- Booking dashboard
+- Booking statistics
+- Search and filtering
+- Booking status management
+- Consultation date/time management
+- Internal admin notes
+- Treatment estimate lead management
+- Payment cancellation/refund workflow
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Data & Communication
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Supabase-backed booking and lead storage
+- Row Level Security policies for authenticated admin access
+- Transactional emails using Resend
+- Google Analytics event tracking
+- Structured API routes for booking, payment and administrative operations
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Supabase
+- Stripe
+- Resend
+- React Hook Form
+- Zod
+- Vercel
+
+## Architecture
+
+```text
+                    ┌─────────────────────┐
+                    │   Patient Website   │
+                    │ Next.js + React     │
+                    └──────────┬──────────┘
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+              ▼                ▼                ▼
+       Treatment        Booking System     Estimate Lead
+       Estimator             │                │
+                             ▼                ▼
+                        API Routes         Supabase
+                             │
+                    ┌────────┴────────┐
+                    ▼                 ▼
+                 Stripe            Supabase
+                 Payments          Database
+                    │
+                    ▼
+             Stripe Webhooks
+                    │
+                    ▼
+              Booking Creation
+                    │
+                    ▼
+             Resend Email Flow
+
+                    ──────────────────
+
+                    Admin Dashboard
+                          │
+                          ▼
+                       Supabase
+                          │
+              ┌───────────┼───────────┐
+              ▼           ▼           ▼
+           Bookings     Leads      Statistics
